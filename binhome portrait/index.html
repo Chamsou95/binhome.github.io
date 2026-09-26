@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BINHÔME — Ton parfum, créé pour toi, à distance</title>
+<meta name="description" content="Un parfumeur compose ton parfum unique, à partir de ton portrait olfactif. Un parcours guidé, un coffret d'exploration, des essais à l'aveugle, et ton flacon.">
+<meta property="og:title" content="BINHÔME — Ton parfum, créé pour toi">
+<meta property="og:description" content="Un parfum unique, composé pour toi à distance, à partir de ton portrait olfactif.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   COULEURS ET POLICES — modifie ici pour changer l'identité
+   ============================================================ */
+:root{
+  --paper:#F6F3EC; --card:#FFFDF9; --ink:#23262B; --muted:#6B6960; --line:#DFD9CC;
+  --accent:#9A4E2F; --accent-soft:#F0E1D7; --gold:#B08A3E; --deep:#2B2320;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --paper:#14161A; --card:#1C1F24; --ink:#EDE8DF; --muted:#A5A197; --line:#2F343B;
+  --accent:#D98A63; --accent-soft:#3A241B; --gold:#D5AE63; --deep:#0E1013; } }
+:root[data-theme="dark"]{
+  --paper:#14161A; --card:#1C1F24; --ink:#EDE8DF; --muted:#A5A197; --line:#2F343B;
+  --accent:#D98A63; --accent-soft:#3A241B; --gold:#D5AE63; --deep:#0E1013; }
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(4.5rem + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16.5px/1.65 "Public Sans",system-ui,-apple-system,sans-serif;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:300;letter-spacing:-.02em;margin:0;line-height:1.08}
+h1{font-size:clamp(2.6rem,8vw,4.6rem)}
+h2{font-size:clamp(2rem,5vw,3rem)}
+h3{font-size:1.3rem;font-weight:400;letter-spacing:0}
+p{margin:0 0 1rem}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 1.2rem}
+.narrow{max-width:720px}
+section{padding:clamp(3.5rem,9vw,7rem) 0}
+.eyebrow{font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 .9rem}
+.lead{font-family:"Newsreader",Georgia,serif;font-style:italic;font-weight:300;font-size:clamp(1.15rem,2.4vw,1.45rem);color:var(--muted);max-width:60ch}
+/* barre de navigation */
+nav.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 97%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:4.5rem}
+.logo{font-family:"Newsreader",serif;letter-spacing:.24em;text-transform:uppercase;font-size:.85rem;text-decoration:none}
+nav.top ul{display:flex;gap:1.4rem;list-style:none;margin:0;padding:0;font-size:.92rem}
+nav.top a{text-decoration:none;color:var(--muted)}
+nav.top a:hover{color:var(--accent)}
+.btn{display:inline-block;font:inherit;font-weight:500;font-size:.95rem;text-decoration:none;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:.72rem 1.6rem;cursor:pointer;transition:transform .15s ease,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.or{background:var(--accent);border-color:var(--accent);color:#FFF9F4}
+.btn.lg{padding:.9rem 2rem;font-size:1.02rem}
+/* hero */
+.hero{padding:clamp(3rem,9vw,6.5rem) 0 clamp(2.5rem,6vw,4rem)}
+.hero h1{margin:.4rem 0 1.4rem;max-width:16ch}
+.hero .actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem}
+.hero .fine{font-size:.86rem;color:var(--muted);margin-top:1.4rem}
+.flacon-deco{position:absolute;right:-2rem;top:-2rem;width:min(38vw,320px);opacity:.14;pointer-events:none}
+.hero-inner{position:relative}
+/* bandeau chiffres */
+.bandeau{background:var(--deep);color:#F3EDE4}
+.bandeau .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;padding-top:3rem;padding-bottom:3rem}
+.bandeau b{display:block;font-family:"Newsreader",serif;font-weight:300;font-size:2.4rem;color:var(--gold);line-height:1}
+.bandeau span{font-size:.92rem;opacity:.8}
+/* étapes */
+.etapes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.6rem;margin-top:2.6rem;counter-reset:e}
+.etape{position:relative;padding-top:1.2rem;border-top:2px solid var(--accent-soft);counter-increment:e}
+.etape::before{content:counter(e,decimal-leading-zero);font-family:"Newsreader",serif;font-size:.95rem;color:var(--accent);display:block;margin-bottom:.4rem}
+.etape h3{margin-bottom:.35rem}
+.etape p{font-size:.94rem;color:var(--muted);margin:0}
+/* offres */
+.offres{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.2rem;margin-top:2.6rem;align-items:start}
+.offre{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6rem 1.5rem;display:flex;flex-direction:column;gap:.9rem;height:100%}
+.offre.phare{border-color:var(--accent);box-shadow:0 12px 40px -24px var(--accent)}
+.offre .tag{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.offre .prix{font-family:"Newsreader",serif;font-size:2.1rem;font-weight:300}
+.offre .prix small{font-size:.9rem;color:var(--muted);font-family:"Public Sans",sans-serif}
+.offre ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem;font-size:.94rem}
+.offre li{padding-left:1.3rem;position:relative}
+.offre li::before{content:"—";position:absolute;left:0;color:var(--accent)}
+.offre .btn{margin-top:auto;text-align:center}
+.options{margin-top:1.8rem;font-size:.92rem;color:var(--muted)}
+.options b{color:var(--ink);font-weight:500}
+/* méthode */
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.4rem;align-items:center}
+.cadre{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6rem}
+.cadre h3{margin-bottom:.5rem}
+.cadre p:last-child{margin-bottom:0}
+/* citation */
+.cite{font-family:"Newsreader",serif;font-style:italic;font-weight:300;font-size:clamp(1.4rem,3.4vw,2rem);line-height:1.35;max-width:22ch}
+/* faq */
+details.faq{border-bottom:1px solid var(--line);padding:1.1rem 0}
+details.faq summary{cursor:pointer;font-family:"Newsreader",serif;font-size:1.18rem;list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:1.3rem}
+details.faq[open] summary::after{content:"−"}
+details.faq p{margin:.8rem 0 0;color:var(--muted);max-width:70ch}
+/* final */
+.final{background:var(--deep);color:#F3EDE4;text-align:center}
+.final h2{color:#F8F3EA}
+.final .lead{color:#C9C0B4}
+.final .btn{background:var(--gold);border-color:var(--gold);color:#221B12;margin-top:1.8rem}
+footer{border-top:1px solid var(--line);padding:2.5rem 0 3rem;font-size:.88rem;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+footer a{color:var(--muted)}
+.rev{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.rev.vu{opacity:1;transform:none}
+@media (max-width:760px){ nav.top ul{display:none} }
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .rev{opacity:1;transform:none;transition:none} }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <a class="logo" href="#haut">BINHÔME</a>
+    <ul>
+      <li><a href="#demarche">La démarche</a></li>
+      <li><a href="#offres">Les offres</a></li>
+      <li><a href="#methode">La méthode</a></li>
+      <li><a href="#questions">Questions</a></li>
+    </ul>
+    <!-- LIEN DU QUESTIONNAIRE : remplace par l'adresse de ta page portrait-olfactif.html -->
+    <a class="btn or" href="portrait-olfactif.html">Commencer</a>
+  </div>
+</nav>
+
+<header class="hero" id="haut">
+  <div class="wrap hero-inner">
+    <svg class="flacon-deco" viewBox="0 0 40 64" aria-hidden="true">
+      <rect x="15" y="2" width="10" height="8" rx="2" fill="currentColor"/>
+      <path d="M8 18 q0-6 7-7 h10 q7 1 7 7 v38 q0 6-6 6 H14 q-6 0-6-6 z" fill="none" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <p class="eyebrow">Parfum sur mesure, à distance</p>
+    <h1>Ton parfum n'existe pas encore.</h1>
+    <p class="lead">Tu me racontes une envie, un souvenir, une saison. Je compose le parfum qui la porte, rien que pour toi, et on l'affine ensemble jusqu'à ce qu'il soit juste.</p>
+    <div class="actions">
+      <a class="btn or lg" href="portrait-olfactif.html">Commencer mon portrait olfactif</a>
+      <a class="btn ghost lg" href="#demarche">Comment ça se passe</a>
+    </div>
+    <p class="fine">Une vingtaine de minutes pour le questionnaire. Aucun engagement avant d'avoir échangé.</p>
+  </div>
+</header>
+
+<div class="bandeau">
+  <div class="wrap">
+    <!-- CHIFFRES : adapte-les à ta réalité -->
+    <div><b>1</b><span>parfum unique, composé à la main pour une seule personne</span></div>
+    <div><b>2 à 3</b><span>versions essayées à l'aveugle avant le flacon final</span></div>
+    <div><b>6 à 8</b><span>semaines, le temps que la macération fasse son travail</span></div>
+  </div>
+</div>
+
+<section id="demarche">
+  <div class="wrap">
+    <p class="eyebrow">La démarche</p>
+    <h2>Un atelier de parfumeur, chez toi.</h2>
+    <p class="lead">La création sur mesure se faisait jusqu'ici en boutique, à Paris ou à Grasse. Je l'ai transposée à distance, sans rien perdre de la méthode : chaque étape est guidée, et c'est ton nez qui décide.</p>
+    <div class="etapes">
+      <div class="etape rev"><h3>Ton portrait</h3><p>Un questionnaire en sept chapitres : tes envies, tes images, tes souvenirs, tes rejets. C'est le brief de création.</p></div>
+      <div class="etape rev"><h3>Ton coffret</h3><p>Tu reçois des mouillettes d'accords choisis pour toi. Tu les sens, tu les notes : on traduit les mots en odeurs.</p></div>
+      <div class="etape rev"><h3>Les premières versions</h3><p>Je compose, puis je décline deux ou trois variantes qui ne diffèrent que d'un réglage. Tu les essaies à l'aveugle.</p></div>
+      <div class="etape rev"><h3>L'affinage</h3><p>On corrige ce qui gêne, une chose à la fois. Chaque tour se comprend, et le parfum converge vers toi.</p></div>
+      <div class="etape rev"><h3>Le baptême</h3><p>Tu nommes ton parfum. Il part avec son étiquette, sa carte d'identité olfactive et son histoire.</p></div>
+      <div class="etape rev"><h3>La suite</h3><p>Ta formule est archivée. Une recharge se commande en un clic, et le parfum reste le tien.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="offres" style="background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <p class="eyebrow">Les offres</p>
+    <h2>Trois façons d'aller au bout.</h2>
+    <p class="lead">La différence tient au nombre d'allers-retours : plus on itère, plus le parfum te ressemble.</p>
+    <!-- PRIX ET CONTENU : à ajuster. Les montants ci-dessous sont des exemples à remplacer. -->
+    <div class="offres">
+      <article class="offre rev">
+        <span class="tag">Découverte</span>
+        <span class="prix">190 €<small> · flacon 30 ml</small></span>
+        <ul>
+          <li>Questionnaire complet et portrait rédigé</li>
+          <li>Coffret d'exploration, 6 mouillettes</li>
+          <li>Une version, deux variantes à l'aveugle</li>
+          <li>Ton flacon de 30 ml, étiquette personnalisée</li>
+        </ul>
+        <a class="btn ghost" href="portrait-olfactif.html?offre=decouverte">Choisir Découverte</a>
+      </article>
+      <article class="offre phare rev">
+        <span class="tag">Signature · le plus choisi</span>
+        <span class="prix">390 €<small> · flacon 50 ml</small></span>
+        <ul>
+          <li>Tout ce qu'il y a dans Découverte</li>
+          <li>Coffret étendu, 10 mouillettes</li>
+          <li>Deux versions et un affinage guidé</li>
+          <li>Un échange en visio de 30 minutes</li>
+          <li>Carte d'identité olfactive imprimée</li>
+        </ul>
+        <a class="btn or" href="portrait-olfactif.html?offre=signature">Choisir Signature</a>
+      </article>
+      <article class="offre rev">
+        <span class="tag">Exclusive</span>
+        <span class="prix">790 €<small> · flacon 100 ml</small></span>
+        <ul>
+          <li>Tout ce qu'il y a dans Signature</li>
+          <li>Itérations libres pendant trois mois</li>
+          <li>Matières d'exception incluses</li>
+          <li>Formule réservée : je ne la réutilise jamais</li>
+          <li>Deux recharges offertes la première année</li>
+        </ul>
+        <a class="btn ghost" href="portrait-olfactif.html?offre=exclusive">Choisir Exclusive</a>
+      </article>
+    </div>
+    <p class="options">
+      <b>En option</b> — une note précieuse (iris, fleur d'oranger absolue, santal), un flacon gravé, un coffret cadeau, ou la déclinaison de ton parfum en brume ou en bougie.
+      <br><b>Carte cadeau</b> — le parcours s'offre : la personne remplit son portrait quand elle le souhaite.
+    </p>
+  </div>
+</section>
+
+<section id="methode">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">La méthode</p>
+      <p class="cite">Un parfum se construit comme une recette : par accords, pas par hasard.</p>
+    </div>
+    <div>
+      <div class="cadre rev">
+        <h3>Des accords, pas une liste de matières</h3>
+        <p>Je travaille par modules. Chaque accord est composé et senti séparément, puis assemblé. C'est ce qui permet de corriger une seule chose sans défaire le reste.</p>
+      </div>
+      <div class="cadre rev" style="margin-top:1rem">
+        <h3>Des essais à l'aveugle</h3>
+        <p>Les variantes arrivent codées : tu ne sais pas laquelle est laquelle. Ton nez tranche sans être influencé, et c'est la meilleure garantie d'aimer vraiment le résultat.</p>
+      </div>
+      <div class="cadre rev" style="margin-top:1rem">
+        <h3>Le temps qu'il faut</h3>
+        <p>Un parfum se transforme pendant sa macération, deux à quatre semaines. Je ne livre jamais un jus que je n'ai pas senti mûr.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="questions" style="background:var(--card);border-top:1px solid var(--line)">
+  <div class="wrap narrow">
+    <p class="eyebrow">Questions</p>
+    <h2>Ce qu'on me demande souvent.</h2>
+    <div style="margin-top:2rem">
+      <details class="faq"><summary>Combien de temps ça prend ?</summary><p>Entre six et huit semaines pour l'offre Signature. La macération représente l'essentiel de ce délai, et elle ne se raccourcit pas sans abîmer le parfum. Tu suis chaque étape en ligne.</p></details>
+      <details class="faq"><summary>Et si le résultat ne me plaît pas ?</summary><p>C'est précisément à ça que servent les variantes et l'affinage : on ne passe au flacon final que quand tu es convaincu. Si, malgré tout, on n'y arrive pas, on en discute ; je préfère un client sans flacon qu'un parfum qui dort dans un tiroir.</p></details>
+      <details class="faq"><summary>Je n'y connais rien, c'est grave ?</summary><p>Au contraire. Le questionnaire est fait pour parler d'images et de souvenirs, pas de matières premières. La plupart des clients ne connaissent aucun nom d'ingrédient, et ça n'a aucune importance.</p></details>
+      <details class="faq"><summary>Peut-on l'offrir ?</summary><p>Oui. Tu offres le parcours, et la personne remplit son portrait quand elle le souhaite. Le questionnaire a aussi un mode « je réponds pour quelqu'un d'autre », si tu préfères tout préparer toi-même.</p></details>
+      <details class="faq"><summary>Et si j'ai la peau sensible ?</summary><p>Le questionnaire te demande si tu as déjà réagi à un parfum. J'en tiens compte dans la formule, et je te conseille toujours un essai sur une petite zone avant un usage quotidien.</p></details>
+      <details class="faq"><summary>Puis-je racheter mon parfum plus tard ?</summary><p>Oui, ta formule est archivée et numérotée. Une recharge se commande directement, sans repasser par la création.</p></details>
+      <details class="faq"><summary>Qu'est-ce qu'il y a dedans ?</summary><p>Des matières de parfumerie, naturelles et de synthèse, dans de l'alcool. Tu reçois la liste des allergènes à déclarer avec ton flacon, et je réponds volontiers à toute question sur la composition.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap narrow">
+    <h2>On commence par ton portrait.</h2>
+    <p class="lead" style="margin:1.2rem auto 0">Une vingtaine de minutes, en images et en souvenirs. À la fin, tu sauras déjà quel parfum tu cherches.</p>
+    <a class="btn lg" href="portrait-olfactif.html">Commencer mon portrait olfactif</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <!-- COORDONNÉES : à compléter -->
+      <p style="margin:0">BINHÔME · <a href="mailto:contact@binhome.fr">contact@binhome.fr</a></p>
+      <p style="margin:.3rem 0 0">Parfums composés à la main en Île-de-France.</p>
+    </div>
+    <div>
+      <p style="margin:0"><a href="confidentialite.html">Confidentialité</a> · <a href="confidentialite.html#mentions">Mentions légales</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Apparition douce des blocs au défilement
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("vu"); io.unobserve(e.target); } });
+},{rootMargin:"0px 0px -10% 0px"});
+document.querySelectorAll(".rev").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
